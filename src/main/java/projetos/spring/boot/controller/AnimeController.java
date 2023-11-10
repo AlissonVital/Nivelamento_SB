@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import projetos.spring.boot.domain.Anime;
 import projetos.spring.boot.service.AnimeService;
@@ -35,5 +37,11 @@ public class AnimeController {
     public ResponseEntity<Anime> findById(@PathVariable long id) {//para o java mapear essa variavel
         log.info(dateUtil.formatLocalDateTimeToDataBaseStyle(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.findById(id));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Anime> save(@PathVariable Anime anime) {
+        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);//HttpStatus.CREATED É RESPONSÁVEL PELO RESULTADO 201
     }
 }
